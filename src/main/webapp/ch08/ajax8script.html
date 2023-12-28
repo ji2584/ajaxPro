@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+function ajax() {
+
+	const  formData = new FormData(document.querySelector('form[name=ajaxForm]'))
+	const queryString = new URLSearchParams(formData).toString();
+	alert(queryString)
+	let parms = ""
+	for(f of formData.entries()){
+	      parms += f[0]+"="+f[1]+"&"
+	   }
+     alert(parms)	
+     const xhttp = new XMLHttpRequest()
+     xhttp.open("POST", "test08.jsp",true)
+     xhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded'); //post 일때한다.
+	 xhttp.send(parms)
+	 xhttp.onreadystatechange= callBack
+	}
+function callBack() {
+	if(this.readyState == 4&&this.status==200) {
+		alert(this.responseText)
+		document.getElementById("view").innerHTML=this.responseText
+	}}
+</script>
+</head>
+<body>
+<form name = "ajaxForm">
+<input type = "text" name = "name">
+<input type = "text" name = "city">
+</form>
+<div id ="view"></div>
+<button onclick="ajax()">POST request</button>
+</body>
+</html>

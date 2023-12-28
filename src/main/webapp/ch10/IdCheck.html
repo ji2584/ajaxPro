@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+function idChk() {
+	const id = document.f.id.value
+	let result = document.querySelector("#result")
+	const param = "id="+id
+	console.log(param)
+	// alert(result)
+	if (id.length<8) {
+		result.style.color='red'
+		result.innerHTML="id는 8자리 이상 입니다 "
+	} else {
+		const xhttp = new XMLHttpRequest()
+		//post 일때 보내는 방법
+		xhttp.open("POST", "readId.jsp", true)
+		xhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+		xhttp.send(param)
+		xhttp.onreadystatechange = callBack	
+		
+	}
+	
+	
+}
+
+function callBack() {
+	
+	if(this.readyState == 4 && this.status == 200) {
+		let result = document.querySelector("#result")
+		let chk = this.responseText.trim(); 
+		console.log(chk)
+		if (chk=='false') {
+			result.style.color='blue'
+			result.innerHTML="사용 가능한 id 입니다" 
+			document.f.confirm.value="ok"
+		} else {
+			result.style.color='red'
+			result.innerHTML="사용중인 id 입니다" 
+				document.f.confirm.value="no"
+		}
+	
+		
+		
+	}
+}
+function inputChk(f) {
+	
+	if (f.id.value=="") {
+		alert("id를 입력하세요")
+		f.id.focus();
+		return false
+	}
+	if (f.confirm.value!="ok") {
+		alert("id확인이 되지 않았습니다")
+		f.id.focus();
+		return false
+	}
+	return true
+}
+
+</script>
+</head>
+<body>
+  
+ 	<form name="f"  onsubmit="return inputChk(this.form)">
+	ID:<input type="text"  name="id"   id="id"  
+	autocomplete="off"  onkeyup="idChk()">
+	<input type="hidden" name="confirm"  value="">
+	<input type="submit"  value="입력 확인">
+	</form>
+	<div id="result"  style="padding-left: 10px;">
+  </div>
+</body>
+</html>

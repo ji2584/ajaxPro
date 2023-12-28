@@ -9,28 +9,33 @@
 </head>
 <script>
 function load(url){
-	const xhttp = new XMLHttpRequest()
-	xhttp.open("GET",url,true) ; xhttp.send()
-	xhttp.onreadystatechange = callBack }
+   const xhttp = new XMLHttpRequest()
+   xhttp.open("GET",url,true) ; xhttp.send()
+   xhttp.onreadystatechange = callBack }
 function callBack(){
-	if(this.readyState == 4 && this.status == 200) {
-		let items = JSON.parse(this.responseText)
-		//String --> object JSON.parse(item)
-		//		let itmes = {"author":"test입니다"}
-		//object --> string(json) JSON.stringify(item)
-		let out = '<table class = "w3-table-all">'
-		for (item of items){
-			out += "<tr><td>" + item.author.book + "</td>"
-			out += "<td>" + item.author.pubDate+"</td></tr>"
-			console.log(item)
-		}	out += "</table>"
-		document.querySelector("#area").innerHTML=out
-		console.log(JSON.stringify(items))	}}
+   if(this.readyState == 4 && this.status == 200) {
+      let items = JSON.parse(this.responseText)
+      //String --> object JSON.parse(item)
+      //      let itmes = {"author":"test입니다"}
+      //object --> string(json) JSON.stringify(item)
+      let out = '<table class = "w3-table-all">'
+      for (item of items){
+         out += "<tr><td>" + item.author.book + "</td>"
+         out += "<td>" + item.author.pubDate+"</td></tr>"
+         console.log(item)
+      }   out += "</table>"
+      document.querySelector("#area").innerHTML=out
+      console.log(JSON.stringify(items))   
+      console.log(items)
+   }
+   }
 
 </script>
 <body>
 <input type = "button" value="Json UTF read" onclick="load('test03UTF.json')"/>
+
 <input type = "button" value="Json ANSI read" onclick="load('test03ANSI.json')"/>
+
 <div id = "area"></div>
 
 

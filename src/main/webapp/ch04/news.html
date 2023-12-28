@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script>
+window.onload = function() {
+	const xhttp = new XMLHttpRequest()
+	xhttp.open("GET","getNewsTitles.jsp")
+	xhttp.send()
+	xhttp.onreadystatechange=callBack
+}
+function callBack() {
+	if(this.readyState == 4&&this.status==200) {
+		document.getElementById("news").innerHTML=this.responseText
+}}
+</script>
+</head>
+<body>
+<div id ="news"></div>
+</body>
+</html>
